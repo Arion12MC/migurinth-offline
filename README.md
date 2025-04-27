@@ -1,21 +1,47 @@
----
-
 # 🌱 **Migurinth**
 
 [![Latest Release](https://img.shields.io/github/v/release/miguvt/migurinth?color=brightgreen&label=Latest%20Release)](https://github.com/miguvt/migurinth/releases)
+[![License: AGPL v3](https://img.shields.io/github/license/miguvt/migurinth)](https://github.com/miguvt/migurinth/blob/main/LICENSE)
 
 > **Migurinth** is an independent fork of the original Modrinth App, offering a **cleaner, privacy-focused experience** by removing telemetry and ads.  
 > This project is **not affiliated** with or **endorsed by Modrinth**.
 
 ---
 
+## 📚 Table of Contents
+
+- [🌱 **Migurinth**](#-migurinth)
+  - [📚 Table of Contents](#-table-of-contents)
+  - [🚀 **Why Choose Migurinth?**](#-why-choose-migurinth)
+    - [✨ **Features**](#-features)
+  - [📸 **Screenshots**](#-screenshots)
+  - [📥 **Download \& Installation**](#-download--installation)
+    - [**Installation Instructions**](#installation-instructions)
+  - [🌟 **What Makes Migurinth Different?**](#-what-makes-migurinth-different)
+  - [📄 **License**](#-license)
+  - [⚠️ **Disclaimer**](#️-disclaimer)
+  - [📧 **Contact**](#-contact)
+
+---
+
 ## 🚀 **Why Choose Migurinth?**
 
-### ✨ **Features**:
+### ✨ **Features**
 
 - **No Telemetry**: Enjoy your privacy—no data tracking or analytics.
 - **Ad-Free Experience**: No intrusive ads for a clean and distraction-free experience.
 - **Same Build Process**: Uses the same build and update system as the original Modrinth app for full compatibility.
+
+---
+
+## 📸 **Screenshots**
+
+| Home | Mod Browser | Settings |
+|:----:|:-----------:|:--------:|
+| ![Home Screenshot](.github/assets/MiguRinth/Readme/home.png) | ![Mod Browser Screenshot](.github/assets/MiguRinth/Readme/modbrowser.png) | ![Settings Screenshot](.github/assets/MiguRinth/Readme/settings.png) |
+
+> _*Screenshots may vary slightly depending on your operating system or app version.*_
+> _*Click on the images to view them in full resolution.*_
 
 ---
 
@@ -39,6 +65,7 @@ You can download the latest version of Migurinth from the [**Releases**](https:/
    - Download the appropriate `.AppImage`, `.deb`, or `.rpm` package.
    - Follow your distribution’s standard installation procedure.
    - For AppImage, make it executable with:
+
      ```bash
      chmod +x Migurinth.AppImage
      ./Migurinth.AppImage

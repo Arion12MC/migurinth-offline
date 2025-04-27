@@ -139,9 +139,7 @@ pub async fn write(
         })
     })
     .await
-    .map_err(|_| {
-        std::io::Error::new(std::io::ErrorKind::Other, "background task failed")
-    })??;
+    .map_err(|_| std::io::Error::other("background task failed"))??;
 
     Ok(())
 }
@@ -152,8 +150,7 @@ fn sync_write(
 ) -> Result<(), std::io::Error> {
     let mut tempfile =
         NamedTempFile::new_in(path.as_ref().parent().ok_or_else(|| {
-            std::io::Error::new(
-                std::io::ErrorKind::Other,
+            std::io::Error::other(
                 "could not get parent directory for temporary file",
             )
         })?)?;
@@ -252,6 +249,32 @@ pub async fn remove_file(
 ) -> Result<(), IOError> {
     let path = path.as_ref();
     tokio::fs::remove_file(path)
+        .await
+        .map_err(|e| IOError::IOPathError {
+            source: e,
+            path: path.to_string_lossy().to_string(),
+        })
+}
+
+// remove dir
+pub async fn remove_dir(
+    path: impl AsRef<std::path::Path>,
+) -> Result<(), IOError> {
+    let path = path.as_ref();
+    tokio::fs::remove_dir(path)
+        .await
+        .map_err(|e| IOError::IOPathError {
+            source: e,
+            path: path.to_string_lossy().to_string(),
+        })
+}
+
+// metadata
+pub async fn metadata(
+    path: impl AsRef<std::path::Path>,
+) -> Result<std::fs::Metadata, IOError> {
+    let path = path.as_ref();
+    tokio::fs::metadata(path)
         .await
         .map_err(|e| IOError::IOPathError {
             source: e,
