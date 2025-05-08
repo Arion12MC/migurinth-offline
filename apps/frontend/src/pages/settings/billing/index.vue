@@ -64,6 +64,21 @@
               </template>
             </span>
             <template v-if="midasCharge">
+              <span
+                v-if="
+                  midasCharge.status === 'open' && midasCharge.subscription_interval === 'monthly'
+                "
+                class="text-sm text-purple"
+              >
+                Save
+                {{
+                  formatPrice(
+                    vintl.locale,
+                    midasCharge.amount * 12 - oppositePrice,
+                    midasCharge.currency_code,
+                  )
+                }}/year by switching to yearly billing!
+              </span>
               <span class="text-sm text-secondary">
                 Since {{ $dayjs(midasSubscription.created).format("MMMM D, YYYY") }}
               </span>
@@ -118,19 +133,46 @@
               </OverflowMenu>
             </ButtonStyled>
           </div>
-          <ButtonStyled v-else-if="midasCharge && midasCharge.status !== 'cancelled'">
-            <button
-              class="ml-auto"
-              @click="
-                () => {
-                  cancelSubscriptionId = midasSubscription.id;
-                  $refs.modalCancel.show();
-                }
-              "
+          <div
+            v-else-if="midasCharge && midasCharge.status !== 'cancelled'"
+            class="ml-auto flex gap-2"
+          >
+            <ButtonStyled>
+              <button
+                :disabled="changingInterval"
+                @click="
+                  () => {
+                    cancelSubscriptionId = midasSubscription.id;
+                    $refs.modalCancel.show();
+                  }
+                "
+              >
+                <XIcon /> Cancel
+              </button>
+            </ButtonStyled>
+            <ButtonStyled
+              :color="midasCharge.subscription_interval === 'yearly' ? 'standard' : 'purple'"
+              color-fill="text"
             >
-              <XIcon /> Cancel
-            </button>
-          </ButtonStyled>
+              <button
+                v-tooltip="
+                  midasCharge.subscription_interval === 'yearly'
+                    ? `Monthly billing will cost you an additional ${formatPrice(
+                        vintl.locale,
+                        oppositePrice * 12 - midasCharge.amount,
+                        midasCharge.currency_code,
+                      )} per year`
+                    : undefined
+                "
+                :disabled="changingInterval"
+                @click="switchMidasInterval(oppositeInterval)"
+              >
+                <SpinnerIcon v-if="changingInterval" class="animate-spin" />
+                <TransferIcon v-else /> {{ changingInterval ? "Switching" : "Switch" }} to
+                {{ oppositeInterval }}
+              </button>
+            </ButtonStyled>
+          </div>
           <ButtonStyled
             v-else-if="midasCharge && midasCharge.status === 'cancelled'"
             color="purple"
@@ -178,8 +220,12 @@
               />
               <div v-else class="w-fit">
                 <p>
-                  A linked server couldn't be found with this subscription. It may have been deleted
-                  or suspended. Please contact Modrinth support with the following information:
+                  A linked server couldn't be found for this subscription. There are a few possible
+                  explanations for this. If you just purchased your server, this is normal. It could
+                  take up to an hour for your server to be provisioned. Otherwise, if you purchased
+                  this server a while ago, it has likely since been suspended. If this is not what
+                  you were expecting, please contact Modrinth support with the following
+                  information:
                 </p>
                 <div class="flex w-full flex-col gap-2">
                   <CopyCode
@@ -547,6 +593,8 @@ import {
 } from "@modrinth/ui";
 import {
   PlusIcon,
+  TransferIcon,
+  SpinnerIcon,
   ArrowBigUpDashIcon,
   XIcon,
   CardIcon,
@@ -750,6 +798,13 @@ const midasCharge = computed(() =>
     : null,
 );
 
+const oppositePrice = computed(() =>
+  midasSubscription.value
+    ? midasProduct.value?.prices?.find((price) => price.id === midasSubscription.value.price_id)
+        ?.prices?.intervals?.[oppositeInterval.value]
+    : undefined,
+);
+
 const pyroSubscriptions = computed(() => {
   const pyroSubs = subscriptions.value?.filter((s) => s?.metadata?.type === "pyro") || [];
   const servers = serversData.value?.servers || [];
@@ -846,6 +901,31 @@ async function submit() {
 }
 
 const removePaymentMethodIndex = ref();
+
+const changingInterval = ref(false);
+
+const oppositeInterval = computed(() =>
+  midasCharge.value?.subscription_interval === "yearly" ? "monthly" : "yearly",
+);
+
+async function switchMidasInterval(interval) {
+  changingInterval.value = true;
+  startLoading();
+  try {
+    await useBaseFetch(`billing/subscription/${midasSubscription.value.id}`, {
+      internal: true,
+      method: "PATCH",
+      body: {
+        interval,
+      },
+    });
+    await refresh();
+  } catch (error) {
+    console.error("Error switching Modrinth+ payment interval:", error);
+  }
+  stopLoading();
+  changingInterval.value = false;
+}
 
 async function editPaymentMethod(index, primary) {
   startLoading();
