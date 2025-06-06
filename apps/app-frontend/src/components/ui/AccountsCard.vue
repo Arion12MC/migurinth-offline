@@ -58,6 +58,18 @@
         <PlusIcon />
         Add account
       </Button>
+      <Button @click="chooseOfflineUsernameModal.value.show()">
+        <PlusIcon />
+        Add Offline Account
+      </Button>
+      <Modal ref="chooseOfflineUsernameModal" header="Choose username for your offline account">
+        <div class="choose-offline-username-modal">
+          <input type="text" placeholder="Username" v-model="offlineUsername" />
+          <Button icon-only color="primary" @click="offlineLogin(offlineUsername)">
+             <LogInIcon />
+           </Button>
+          </div>
+        </Modal>
     </Card>
   </transition>
 </template>
@@ -78,6 +90,9 @@ import { trackEvent } from '@/helpers/analytics'
 import { process_listener } from '@/helpers/events'
 import { handleSevereError } from '@/store/error.js'
 
+import { Modal } from '@modrinth/ui' // Add if not already present
+const chooseOfflineUsernameModal = ref(null)
+const offlineUsername = ref('')
 defineProps({
   mode: {
     type: String,
@@ -124,7 +139,18 @@ async function login() {
 
   trackEvent('AccountLogIn')
 }
+import { offline_login } from '@/helpers/auth'
 
+async function offlineLogin(username) {
+  if (!username || username.length === 0) return
+  chooseOfflineUsernameModal.value.hide()
+  const loggedIn = await offline_login(username).catch(handleSevereError)
+  if (loggedIn) {
+    await setAccount(loggedIn)
+    await refreshValues()
+  }
+  trackEvent('AccountLogIn')
+}
 const logout = async (id) => {
   await remove_user(id).catch(handleError)
   await refreshValues()
