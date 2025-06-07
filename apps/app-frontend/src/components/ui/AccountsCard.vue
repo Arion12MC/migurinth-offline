@@ -84,6 +84,7 @@ import {
   set_default_user,
   login as login_flow,
   get_default_user,
+  offline_login,
 } from '@/helpers/auth'
 import { handleError } from '@/store/state.js'
 import { trackEvent } from '@/helpers/analytics'
