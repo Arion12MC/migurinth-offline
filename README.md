@@ -4,9 +4,9 @@ it is a fork of migurinth that is a fork of modrinth i want to create a MC launc
 end it because I dont like that AI is taking over if you want fork this project if it turns out too good to be true because I will stop this if I dont likethe result of AI beeing to good compared to humans
 
 enjoy it
+  
 
-
-
+ALL LOGOS OF MINE ARE GENERATET WITH BLOCKBENCH TITEL GENERATOR
 
 
 # 🌱 **Aigurinth**
