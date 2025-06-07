@@ -1,4 +1,15 @@
-# 🌱 **Migurinth**
+#MY PROJECT TO TEST AI CAPABILITYES(sorry I have bad grammar)
+
+it is a fork of migurinth that is a fork of modrinth i want to create a MC launcher with AI but only to see its capabilityes I know that it is bad to use ai for that bot it is an experiment if it turns out ggod I will
+end it because I dont like that AI is taking over if you want fork this project if it turns out too good to be true because I will stop this if I dont likethe result of AI beeing to good compared to humans
+
+enjoy it
+
+
+
+
+
+# 🌱 **Aigurinth**
 
 [![Latest Release](https://img.shields.io/github/v/release/miguvt/migurinth?color=brightgreen&label=Latest%20Release)](https://github.com/miguvt/migurinth/releases)
 [![License: AGPL v3](https://img.shields.io/github/license/miguvt/migurinth)](https://github.com/miguvt/migurinth/blob/main/LICENSE)
@@ -10,7 +21,7 @@
 
 ## 📚 Table of Contents
 
-- [🌱 **Migurinth**](#-migurinth)
+- [🌱 **Aigurinth**](#-migurinth)
   - [📚 Table of Contents](#-table-of-contents)
   - [🚀 **Why Choose Migurinth?**](#-why-choose-migurinth)
     - [✨ **Features**](#-features)
@@ -31,7 +42,7 @@
 - **No Telemetry**: Enjoy your privacy—no data tracking or analytics.
 - **Ad-Free Experience**: No intrusive ads for a clean and distraction-free experience.
 - **Same Build Process**: Uses the same build and update system as the original Modrinth app for full compatibility.
-
+- __--**OFFLINE MODE**: working on that --__
 ---
 
 ## 📸 **Screenshots**
