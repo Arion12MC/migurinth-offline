@@ -6,7 +6,7 @@ end it because I dont like that AI is taking over if you want fork this project 
 enjoy it
   
 
-ALL LOGOS OF MINE ARE GENERATET WITH BLOCKBENCH TITEL GENERATOR
+
 
 
 # 🌱 **Aigurinth**
