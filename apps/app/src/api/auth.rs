@@ -92,6 +92,16 @@ pub async fn set_default_user(user: uuid::Uuid) -> Result<()> {
     Ok(minecraft_auth::set_default_user(user).await?)
 }
 
+#[tauri::command]
+pub async fn get_account_type() -> Result<String, String> {
+    // Replace with your real session/account logic!
+    // Example: If user is logged in with local acc, return "local", else "microsoft"
+    let session = get_current_session().await;
+    match session.account_type {
+        AccountType::Local => Ok("local".into()),
+        AccountType::Microsoft => Ok("microsoft".into()),
+    }
+}
 /// Get a copy of the list of all user credentials
 #[tauri::command]
 pub async fn get_users() -> Result<Vec<Credentials>> {
