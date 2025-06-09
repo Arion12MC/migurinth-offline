@@ -12,6 +12,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             get_default_user,
             set_default_user,
             get_users,
+            get_account_type,
         ])
         .build()
 }
@@ -106,4 +107,11 @@ pub async fn get_account_type() -> Result<String, String> {
 #[tauri::command]
 pub async fn get_users() -> Result<Vec<Credentials>> {
     Ok(minecraft_auth::users().await?)
+}
+#[tauri::command]
+pub async fn get_account_type() -> Result<String, String> {
+    // This is a simple demonstration: 
+    // If you want it to always return "local" (offline), leave as is.
+    // Later, you can add real logic here to return "microsoft" if you detect a Microsoft account.
+    Ok("local".to_string())
 }
