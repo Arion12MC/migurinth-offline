@@ -133,3 +133,7 @@ export async function remove_user(userId) {
   }
   return await invoke('plugin:auth|remove_user', { user: userId })
 }
+export function isLocalAccount(session) {
+  // session.type could be "microsoft" or "local"
+  return session?.type === 'local';
+}
